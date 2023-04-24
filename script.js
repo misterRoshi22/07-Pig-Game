@@ -10,15 +10,27 @@ const playerOneScore = document.querySelector('#score--0'); //hash 3shan a3ml se
 const playerTwoScore = document.querySelector('#score--1');
 const diceElement = document.querySelector('.dice');
 
-const scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
+let scores, currentScore, activePlayer;
 
-//initializing Game
-playerOneScore.textContent = 0;
-playerTwoScore.textContent = 0;
-diceElement.classList.add('hidden');
+const StartNewGame = function () {
+  scores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
 
+  playerOneScore.textContent = 0;
+  playerTwoScore.textContent = 0;
+  diceElement.classList.add('hidden');
+
+  btnHold.classList.remove('hidden');
+  btnRoll.classList.remove('hidden');
+
+  if (playerTwo.classList.contains('player--active')) switchPlayer();
+
+  playerOne.classList.remove('player--winner');
+  playerTwo.classList.remove('player--winner');
+};
+
+StartNewGame();
 //Function for Switching Control
 const switchPlayer = function () {
   currentScore = 0;
@@ -56,7 +68,7 @@ const holdScore = function () {
   scores[activePlayer] += currentScore;
   document.querySelector(scoreToAdd).textContent = scores[activePlayer];
 
-  if (scores[activePlayer] >= 10) {
+  if (scores[activePlayer] >= 100) {
     const winner = document.querySelector(`.player--${activePlayer}`);
     winner.classList.remove('.player--active');
     winner.classList.add('player--winner');
@@ -67,22 +79,4 @@ const holdScore = function () {
 };
 btnHold.addEventListener('click', holdScore);
 
-const StartNewGame = function () {
-  scores[0] = 0;
-  scores[1] = 0;
-  currentScore = 0;
-  activePlayer = 0;
-
-  playerOneScore.textContent = 0;
-  playerTwoScore.textContent = 0;
-  diceElement.classList.add('hidden');
-
-  btnHold.classList.remove('hidden');
-  btnRoll.classList.remove('hidden');
-
-  if (playerTwo.classList.contains('player--active')) switchPlayer();
-
-  playerOne.classList.remove('player--winner');
-  playerTwo.classList.remove('player--winner');
-};
 btnNew.addEventListener('click', StartNewGame);
